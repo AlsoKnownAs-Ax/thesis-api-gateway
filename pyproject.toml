@@ -9,6 +9,8 @@ authors = [
 ]
 dependencies = [
     "fastapi[standard]>=0.116.1",
+    "grpcio>=1.80.0",
+    "grpcio-tools>=1.80.0",
     "httpx>=0.28.1",
     "pwdlib[argon2]>=0.3.0",
     "pydantic-settings>=2.10.1",
