@@ -8,7 +8,6 @@ from app.core.exceptions.base import BaseAppException
 from app.core.exceptions.openapi import DEFAULT_ERROR_RESPONSES
 from app.core.logging import setup_logging
 from app.features.auth.routes import auth
-from app.features.user.routes import user
 
 setup_logging()
 Base.metadata.create_all(bind=engine)
@@ -18,10 +17,9 @@ app = FastAPI(title=config.app_name)
 main_router = APIRouter(responses=DEFAULT_ERROR_RESPONSES)
 
 # Register routes
-main_router.include_router(user.router)
 main_router.include_router(auth.router)
 
-app.include_router(main_router, prefix="/api/v1")
+app.include_router(main_router, prefix="/api/gateway")
 
 # CORS middleware
 app.add_middleware(
