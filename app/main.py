@@ -5,6 +5,7 @@ from fastapi import APIRouter, FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
+from app.api.routes import order, user
 from app.core.config import config
 from app.core.database import Base, engine
 from app.core.exceptions.base import BaseAppException
@@ -32,7 +33,8 @@ app = FastAPI(title=config.app_name, lifespan=lifespan)
 main_router = APIRouter(responses=DEFAULT_ERROR_RESPONSES)
 
 # Register routes
-# main_router.include_router(auth.router)
+main_router.include_router(order.router)
+main_router.include_router(user.router)
 
 app.include_router(main_router, prefix="/api/gateway")
 
