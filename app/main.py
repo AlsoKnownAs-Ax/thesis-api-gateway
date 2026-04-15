@@ -1,3 +1,6 @@
+from contextlib import asynccontextmanager
+
+import grpc
 from fastapi import APIRouter, FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
@@ -8,10 +11,23 @@ from app.core.exceptions.base import BaseAppException
 from app.core.exceptions.openapi import DEFAULT_ERROR_RESPONSES
 from app.core.logging import setup_logging
 
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup
+    app.state.user_channel = grpc.aio.insecure_channel(config.USER_SERVICE_URL)
+    app.state.product_channel = grpc.aio.insecure_channel(config.PRODUCT_SERVICE_URL)
+    app.state.order_channel = grpc.aio.insecure_channel(config.ORDER_SERVICE_URL)
+    yield
+    await app.state.user_channel.close()
+    await app.state.product_channel.close()
+    await app.state.order_channel.close()
+
+
 setup_logging()
 Base.metadata.create_all(bind=engine)
 
-app = FastAPI(title=config.app_name)
+app = FastAPI(title=config.app_name, lifespan=lifespan)
 
 main_router = APIRouter(responses=DEFAULT_ERROR_RESPONSES)
 

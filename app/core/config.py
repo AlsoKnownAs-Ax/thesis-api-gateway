@@ -14,18 +14,9 @@ class Config(BaseSettings):
     # ENV related variables
     ENV: str
 
-    # Auth related settings
-    HASHING_ALGORITHM: str = "HS256"
-
-    ACCESS_TOKEN_COOKIE_NAME: str = "Access-Token"
-    ACCESS_SECRET_KEY: str = ""
-    ACCESS_TOKEN_EXPIRE_MINUTES: float = 30
-
-    REFRESH_TOKEN_COOKIE_NAME: str = "Refresh-Token"
-    REFRESH_SECRET_KEY: str = ""
-    REFRESH_TOKEN_EXPIRE_DAYS: float = 7
-
-    VERIFICATION_CODE_EXPIRATION_MINUTES: int = 30
+    USER_SERVICE_URL: int = "localhost:5141"
+    PRODUCT_SERVICE_URL: int = "localhost:50051"
+    ORDER_SERVICE_URL: int = "localhost:9093"
 
     # CORS
     ALLOWED_ORIGINS: str
