@@ -1,9 +1,10 @@
 from typing import Annotated
 
-from clients.generated.user.v1 import user_pb2_grpc
 from fastapi import Depends, Request
 from grpc.aio import Channel
-from schemas.user import CreateUserRequest, UserResponse
+
+from app.clients.generated.user.v1 import user_pb2_grpc
+from app.schemas.user import CreateUserRequest, UserResponse
 
 
 class UserClient:

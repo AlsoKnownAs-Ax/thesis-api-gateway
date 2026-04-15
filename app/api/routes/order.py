@@ -1,5 +1,6 @@
 from fastapi import APIRouter
-from schemas.order import CreateOrderResponse
+
+from app.schemas.order import CreateOrderResponse
 
 router = APIRouter(
     prefix="/order",

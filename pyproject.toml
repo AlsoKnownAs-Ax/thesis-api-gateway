@@ -5,7 +5,7 @@ description = "This is the thesis API gateway"
 readme = "README.md"
 requires-python = ">=3.13"
 authors = [
-    { name = "AxCodes" }
+    { name = "Amzu Andrei-Alexandru" }
 ]
 dependencies = [
     "fastapi[standard]>=0.116.1",

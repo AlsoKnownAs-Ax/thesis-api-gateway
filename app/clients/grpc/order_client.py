@@ -1,5 +1,6 @@
-from clients.generated.order.v1 import order_pb2_grpc
 from grpc.aio import Channel
+
+from app.clients.generated.order.v1 import order_pb2_grpc
 
 
 class OrderClient():

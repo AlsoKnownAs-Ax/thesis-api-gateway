@@ -1,6 +1,7 @@
-from clients.grpc.user_client import UserClientDep
 from fastapi import APIRouter
-from schemas.user import CreateUserRequest, UserResponse
+
+from app.clients.grpc.user_client import UserClientDep
+from app.schemas.user import CreateUserRequest, UserResponse
 
 router = APIRouter(
     prefix="/user",

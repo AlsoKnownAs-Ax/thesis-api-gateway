@@ -1,5 +1,6 @@
-from clients.generated.user.v1 import user_pb2
 from pydantic import BaseModel, EmailStr
+
+from app.clients.generated.user.v1 import user_pb2
 
 
 class UserResponse(BaseModel):
