@@ -14,9 +14,9 @@ class Config(BaseSettings):
     # ENV related variables
     ENV: str
 
-    USER_SERVICE_URL: int = "localhost:5141"
-    PRODUCT_SERVICE_URL: int = "localhost:50051"
-    ORDER_SERVICE_URL: int = "localhost:9093"
+    USER_SERVICE_URL: str = "localhost:5141"
+    PRODUCT_SERVICE_URL: str = "localhost:50051"
+    ORDER_SERVICE_URL: str = "localhost:9093"
 
     # CORS
     ALLOWED_ORIGINS: str
