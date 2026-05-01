@@ -8,6 +8,8 @@ services:
       - DB_PASSWORD=secret
       - DB_NAME=local.db
       - USER_SERVICE_URL=user-service:5141
+      - ORDER_SERVICE_URL=order-service:9093
+      - PRODUCT_SERVICE_URL=product-service:50051
       - ALLOWED_ORIGINS=http://localhost:3000,http://127.0.0.1:3000
       - ENV=development
     networks:

@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 
-from app.schemas.order import CreateOrderResponse
+from app.clients.grpc.order_client import OrderClientDep
+from app.schemas.order import CreateOrderRequest, CreateOrderResponse
 
 router = APIRouter(
     prefix="/order",
@@ -8,5 +9,5 @@ router = APIRouter(
 )
 
 @router.post("/create", response_model=CreateOrderResponse, operation_id="createOrder")
-def create_order():
-    return
+async def create_order(request: CreateOrderRequest, order_client: OrderClientDep):
+    return await order_client.create_order(request)
