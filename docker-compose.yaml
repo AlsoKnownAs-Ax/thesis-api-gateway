@@ -1,9 +1,19 @@
 services:
-  web:
+  api-gateway:
     build: .
     ports:
-      - "8000:80"
+      - "8000:8000"
     environment:
       - DB_USER=admin
       - DB_PASSWORD=secret
       - DB_NAME=local.db
+      - USER_SERVICE_URL=user-service:5141
+      - ALLOWED_ORIGINS=http://localhost:3000,http://127.0.0.1:3000
+      - ENV=development
+    networks:
+      - thesis-net
+
+networks:
+  thesis-net:
+    external: false
+    name: thesis-net
