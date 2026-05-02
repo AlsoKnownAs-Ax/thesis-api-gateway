@@ -6,9 +6,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
 from app.api.routes import order, user
+from app.clients.grpc.error_handler import translate_grpc_error
 from app.core.config import config
 from app.core.database import Base, engine
-from app.core.exceptions.base import BaseAppException
 from app.core.exceptions.openapi import DEFAULT_ERROR_RESPONSES
 from app.core.logging import setup_logging
 
@@ -48,9 +48,14 @@ app.add_middleware(
 )
 
 # Register error handling
-@app.exception_handler(BaseAppException)
-async def base_app_exception_handler(request: Request, exc: BaseAppException):
+@app.exception_handler(grpc.RpcError)
+async def grpc_error_handler(request: Request, exc: grpc.RpcError):
+    base_exception = translate_grpc_error(exc)
     return JSONResponse(
-        status_code=exc.status_code,
-        content={"code": exc.code, "message": exc.message, "details": exc.details},
+        status_code=base_exception.status_code,
+        content={
+            "code": base_exception.code,
+            "message": base_exception.message,
+            "details": base_exception.details,
+        },
     )
