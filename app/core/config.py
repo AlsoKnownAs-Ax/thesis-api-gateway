@@ -9,20 +9,14 @@ class Config(BaseSettings):
     debug: bool = False
     db_user: str = ""
     db_password: str = ""
-    db_name: str = "local.db"
 
     # ENV related variables
     ENV: str
 
-    USER_SERVICE_URL: str = "localhost:5141"
-    PRODUCT_SERVICE_URL: str = "localhost:50051"
-    ORDER_SERVICE_URL: str = "localhost:9093"
+    BENCHMARK_SERVICE_URL: str = "localhost:9093"
 
     # CORS
     ALLOWED_ORIGINS: str
-    @property
-    def db_url(self):
-        return f"sqlite:///./{self.db_name}"
 
     @property
     def allowed_origins_list(self) -> list[str]:

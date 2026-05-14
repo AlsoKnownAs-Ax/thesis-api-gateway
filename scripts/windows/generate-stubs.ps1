@@ -15,9 +15,7 @@ $out = Join-Path $root "app\clients\generated"
   -I $protos `
   --python_out=$out `
   --grpc_python_out=$out `
-  (Join-Path $protos "user\v1\user.proto") `
-  (Join-Path $protos "product\v1\product.proto") `
-  (Join-Path $protos "order\v1\order.proto")
+  (Join-Path $protos "benchmark.proto")
 
 if ($LASTEXITCODE -ne 0) {
     throw "protoc generation failed with exit code $LASTEXITCODE"
@@ -26,12 +24,8 @@ if ($LASTEXITCODE -ne 0) {
 # 2) Ensure package markers exist (__init__.py)
 $packageRoots = @(
     $out,
-    (Join-Path $out "user"),
-    (Join-Path $out "user\v1"),
-    (Join-Path $out "product"),
-    (Join-Path $out "product\v1"),
-    (Join-Path $out "order"),
-    (Join-Path $out "order\v1")
+    (Join-Path $out "benchmark"),
+    (Join-Path $out "benchmark\v1")
 )
 
 foreach ($dir in $packageRoots) {
@@ -50,6 +44,10 @@ Get-ChildItem $out -Recurse -File | Where-Object { $_.Name -match "_pb2(_grpc)?.
     $updated = $content -replace `
         'from ([A-Za-z_]\w*)\.v1 import ([A-Za-z_]\w*_pb2(?: as [A-Za-z_]\w*)?)', `
         'from app.clients.generated.$1.v1 import $2'
+
+    $updated = $updated -replace `
+        '(^|\r?\n)import ([A-Za-z_]\w*_pb2) as ([A-Za-z_]\w+)', `
+        '$1from . import $2 as $3'
 
     if ($updated -ne $content) {
         Set-Content -Path $_.FullName -Value $updated -NoNewline
